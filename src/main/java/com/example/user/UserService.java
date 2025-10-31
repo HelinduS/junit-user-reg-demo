@@ -31,7 +31,9 @@ public class UserService {
 
     private void validatePassword(String pwd) {
         if (pwd == null || pwd.length() < 8) throw new RegistrationException("Weak password");
-        boolean hasUpper=false, hasLower=false, hasDigit=false;
+        boolean hasUpper = false;
+        boolean hasLower = false;
+        boolean hasDigit = false;
         for (char c : pwd.toCharArray()) {
             if (Character.isUpperCase(c)) hasUpper=true;
             else if (Character.isLowerCase(c)) hasLower=true;

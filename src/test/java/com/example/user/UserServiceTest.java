@@ -66,8 +66,7 @@ class UserServiceTest {
     @ValueSource(strings = {"bad@", "@bad.com", "a@b", "abc"})
     @DisplayName("Invalid email formats are rejected")
     void invalidEmails(String email) {
-        var ex = assertThrows(RegistrationException.class, () ->
-            service.register(new RegisterRequest("A", email, "Abcdef12")));
+        var ex = assertThrows(RegistrationException.class, () -> service.register(new RegisterRequest("A", email, "Abcdef12")));
         assertEquals("Invalid email", ex.getMessage());
     }
 
@@ -75,15 +74,14 @@ class UserServiceTest {
     @ValueSource(strings = {"short7", "alllowercase1", "ALLUPPER1", "NoDigitsHere"})
     @DisplayName("Weak passwords are rejected")
     void weakPasswords(String pwd) {
-        var ex = assertThrows(RegistrationException.class, () ->
-            service.register(new RegisterRequest("A", "ok@example.com", pwd)));
+        var ex = assertThrows(RegistrationException.class, () -> service.register(new RegisterRequest("A", "ok@example.com", pwd)));
         assertEquals("Weak password", ex.getMessage());
     }
 
     @Test
     @DisplayName("Null request is rejected")
     void nullRequest() {
-        assertThrows(RegistrationException.class, () -> service.register(null));
+    assertThrows(RegistrationException.class, () -> service.register(null));
     }
 
     @Test
