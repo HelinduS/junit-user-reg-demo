@@ -34,8 +34,3 @@ Notes about display names
 
 Maven's console output shows test identifiers by default; IDEs (IntelliJ/Eclipse) and Surefire reports will show the `@DisplayName` values. We configured the Surefire plugin to print plain summaries to the console for clarity during demos.
 
-Next steps / exercises
-
-- Replace `UserRepository` with an `InMemoryUserRepository` implementation and add tests that don't use Mockito.
-- Add more edge cases for password/email validation.
-- Integrate with a simple REST controller (Spring Boot) to demonstrate integration tests.
