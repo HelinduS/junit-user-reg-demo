@@ -85,4 +85,32 @@ class UserServiceTest {
     void nullRequest() {
         assertThrows(RegistrationException.class, () -> service.register(null));
     }
+
+    @Test
+    @DisplayName("Login succeeds with correct credentials")
+    void loginSuccess() {
+        String email = "alice@example.com";
+        String password = "Abcdef12";
+        User user = new User(101L, "Alice", email, hasher.hash(password));
+        when(repo.findByEmail(email)).thenReturn(user);
+        User loggedIn = service.login(email, password);
+        assertEquals(user, loggedIn);
+    }
+
+    @Test
+    @DisplayName("Login fails with wrong password")
+    void loginWrongPassword() {
+        String email = "alice@example.com";
+        String password = "Abcdef12";
+        User user = new User(101L, "Alice", email, hasher.hash(password));
+        when(repo.findByEmail(email)).thenReturn(user);
+        assertThrows(RegistrationException.class, () -> service.login(email, "wrongpass"));
+    }
+
+    @Test
+    @DisplayName("Login fails with unknown email")
+    void loginUnknownEmail() {
+        when(repo.findByEmail(anyString())).thenReturn(null);
+        assertThrows(RegistrationException.class, () -> service.login("notfound@example.com", "Abcdef12"));
+    }
 }

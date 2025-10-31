@@ -1,0 +1,7 @@
+com/example/user/RegistrationException.class
+com/example/user/User.class
+com/example/App.class
+com/example/user/UserRepository.class
+com/example/user/RegisterRequest.class
+com/example/user/PasswordHasher.class
+com/example/user/UserService.class

@@ -40,4 +40,17 @@ public class UserService {
         if (!(hasUpper && hasLower && hasDigit))
             throw new RegistrationException("Weak password");
     }
+
+    public User login(String email, String password) {
+        if (email == null || email.isBlank())
+            throw new RegistrationException("Email is required");
+        if (password == null || password.isBlank())
+            throw new RegistrationException("Password is required");
+        User user = repo.findByEmail(email.toLowerCase());
+        if (user == null)
+            throw new RegistrationException("Invalid credentials");
+        if (!hasher.hash(password).equals(user.passwordHash()))
+            throw new RegistrationException("Invalid credentials");
+        return user;
+    }
 }
