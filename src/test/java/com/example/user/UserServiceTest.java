@@ -26,14 +26,19 @@ class UserServiceTest {
 
     @BeforeEach
     void setup() {
-        // Mark these stubbings as lenient because some parameterized tests
-        // exercise validation paths that return early and don't hit the mocks.
+        
         lenient().when(repo.existsByEmail(anyString())).thenReturn(false);
         lenient().when(hasher.hash(anyString())).then(inv -> "HASH(" + inv.getArgument(0) + ")");
         lenient().when(repo.save(any())).thenAnswer(inv -> {
             User u = inv.getArgument(0);
             return new User(100L, u.name(), u.email(), u.passwordHash());
         });
+    }
+
+    @Test
+    @DisplayName("Demo failing test")
+    void demoFail() {
+        assertEquals(1, 2, "This test intentionally fails to show JUnit's failure report");
     }
 
     @Test
@@ -62,7 +67,7 @@ class UserServiceTest {
         verify(repo, never()).save(any());
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} => email=''{0}''")
     @ValueSource(strings = {"bad@", "@bad.com", "a@b", "abc"})
     @DisplayName("Invalid email formats are rejected")
     void invalidEmails(String email) {
@@ -70,7 +75,7 @@ class UserServiceTest {
         assertEquals("Invalid email", ex.getMessage());
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} => pwd=''{0}''")
     @ValueSource(strings = {"short7", "alllowercase1", "ALLUPPER1", "NoDigitsHere"})
     @DisplayName("Weak passwords are rejected")
     void weakPasswords(String pwd) {

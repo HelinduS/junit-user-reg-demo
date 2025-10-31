@@ -48,9 +48,13 @@
           <systemProperties>
             <property>
               <name>junit.jupiter.displayname.generator.default</name>
-              <value>org.junit.jupiter.api.DisplayNameGenerator$Standard</value>
+              <value>org.junit.jupiter.api.DisplayNameGenerator$ReplaceWithArguments</value>
             </property>
           </systemProperties>
+          <!-- JVM args for the forked test JVM: enable instrument trace info so ByteBuddy agent warnings
+               provide guidance (safe), or you can use -XX:+EnableDynamicAgentLoading to hide the warning
+               (may not be supported on all JDKs). -->
+          <argLine>-Djdk.instrument.traceUsage=true</argLine>
         </configuration>
       </plugin>
     </plugins>
